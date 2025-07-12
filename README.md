@@ -1,204 +1,297 @@
-import React from "react";
-import { Mail, Phone, Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { motion } from "framer-motion";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-
-const allServices = [
-  {
-    name: "Work Permit",
-    description: "Apply to legally work in Canada with employer-specific or open work permits."
-  },
-  {
-    name: "Visitor Visa",
-    description: "Explore Canada for tourism or family visits with a Temporary Resident Visa."
-  },
-  {
-    name: "Visitor Record",
-    description: "Extend your stay in Canada or modify conditions on your existing visitor status."
-  },
-  {
-    name: "Study Permit Extension",
-    description: "Continue your education by extending your current study permit."
-  },
-  {
-    name: "Study Permit from Outside Canada",
-    description: "Begin your studies in Canada by applying for a study permit from abroad."
-  },
-  {
-    name: "Post Graduate Work Permit",
-    description: "Work in Canada after graduating from a designated learning institution."
-  },
-  {
-    name: "Spousal Open Work Permit",
-    description: "Spouses or partners of foreign students/workers can work in Canada."
-  },
-  {
-    name: "Bridging Open Work Permit",
-    description: "Continue working in Canada while awaiting a decision on your PR application."
-  }
-];
-
-function Navbar() {
-  return (
-    <nav className="bg-[#FEFAF7] text-[#154D57] shadow-md px-6 py-4 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <span className="font-bold text-xl">Angad Consulting</span>
-        <ul className="flex space-x-6 text-sm">
-          <li><Link to="/" className="hover:underline">Home</Link></li>
-          <li><Link to="/services" className="hover:underline">Services</Link></li>
-          <li><Link to="/expect" className="hover:underline">What to Expect</Link></li>
-          <li><Link to="/results" className="hover:underline">Proven Results</Link></li>
-          <li><Link to="/contact" className="hover:underline">Contact</Link></li>
-        </ul>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Angad Consulting provides trusted immigration consulting services for Study Visa, PR, Work Permits, and more.">
+  <title>Angad Consulting | Immigration Experts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #333;
+    }
+    header {
+      background: #f9f9f9;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      color: #b97a2e;
+      margin: 0;
+    }
+    nav {
+      margin-top: 1rem;
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #444;
+      font-weight: bold;
+    }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      color: white;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+    }
+    .hero-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: #b97a2e;
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+    .section {
+      padding: 4rem 1rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+    .service {
+      background: #f8f8f8;
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .service img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+  
+	  
+    .carousel {
+      overflow: hidden;
+      position: relative;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 2rem;
+      width: max-content;
+      animation: scroll 30s linear infinite;
+    }
+    .testimonial {
+      flex: 0 0 300px;
+      background: #f5f5f5;
+      border-left: 5px solid #b97a2e;
+      padding: 1.5rem;
+      border-radius: 10px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #b97a2e;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .contact {
+      background: #f3f3f3;
+      padding: 4rem 2rem;
+      border-top: 2px solid #ddd;
+      text-align: center;
+      border-radius: 12px;
+    }
+    .contact h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #b97a2e;
+    }
+    .contact p {
+      margin: 0.5rem 0;
+      font-size: 1.1rem;
+    }
+    .contact a {
+      color: #333;
+      text-decoration: none;
+    }
+    .contact a:hover {
+      color: #b97a2e;
+    }
+    footer {
+      background: #1e1e1e;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    footer a {
+      color: #b97a2e;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Angad Consulting</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
     </nav>
-  );
-}
+  </header>
 
-function Home() {
-  return (
-    <section className="relative h-[90vh] bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/immigration-hero.jpg')" }}>
-      <motion.div
-        className="bg-[#154D57] bg-opacity-80 p-16 rounded-xl text-center text-white max-w-3xl"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9 }}
-      >
-        <h1 className="text-5xl font-bold mb-6 tracking-wide">Angad Consulting</h1>
-        <p className="text-lg mb-6 leading-relaxed">Canadian Immigration Solutions Tailored to You</p>
-        <Button className="bg-white text-[#154D57] font-medium hover:bg-[#FEFAF7] px-8 py-3 rounded-xl">Book a Free Consultation</Button>
-      </motion.div>
-    </section>
-  );
-}
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h2>Your Trusted Immigration Experts</h2>
+      <p>Helping you navigate Canadian visas, PR, spousal permits, and more with expertise and care.</p>
+      <a href="#contact" class="btn-primary">Book a Consultation</a>
+    </div>
+  </section>
 
-function Services() {
-  return (
-    <section className="px-6 py-24 bg-[#FEFAF7]">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-semibold mb-4">Canada Immigration Services</h2>
-        <p className="text-[#154D57] text-lg max-w-2xl mx-auto">From work permits to study extensions, we provide comprehensive support for all your Canadian immigration needs.</p>
+  <section id="services" class="section">
+   <h2>Our Services</h2>
+    <div class="services-grid">
+      <div class="service">
+        <img src="https://img.icons8.com/color/96/graduation-cap.png" alt="Study Visa">
+        <h3>Study Visa Assistance</h3>
+        <p>Admissions help, SOPs, and expert visa filing for studying in Canada, UK, and more.</p>
       </div>
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-base">
-        {allServices.map(service => (
-          <motion.div
-            key={service.name}
-            className="bg-[#FEFAF7] rounded-xl shadow-md p-6 text-left hover:bg-[#B7A08B] transition"
-            whileHover={{ scale: 1.03 }}
-          >
-            <p className="font-semibold text-[#154D57] mb-2">{service.name}</p>
-            <p className="text-sm text-[#000000]">{service.description}</p>
-          </motion.div>
-        ))}
+      <div class="service">	 
+        <img src="https://img.icons8.com/external-filled-color-icons-papa-vector/78/external-Spouses-social-participation-and-volunteering-filled-color-icons-papa-vector.png" alt="Spousal Permit">
+        <h3>Spousal Open Work Permit</h3>
+        <p>Helping spouses work legally while accompanying students or workers in Canada.</p>
       </div>
-    </section>
-  );
-}
+      <div class="service">
+        <img src="https://img.icons8.com/color/96/briefcase.png" alt="PGWP">
+        <h3>Post-Graduation Work Permit</h3>
+        <p>Transition from student to employee with PGWP application support.</p>
+      </div>
+      <div class="service">
+        <img src="https://img.icons8.com/color/96/maple-leaf.png" alt="PNP">
+        <h3>Provincial Nominee Program</h3>
+        <p>Get nominated by a Canadian province and boost your PR chances.</p>
+      </div>
+      <div class="service">
+        <img src="https://img.icons8.com/color/96/passport.png" alt="PR">
+        <h3>Permanent Residency</h3>
+        <p>Expert help with Express Entry, Sponsorship, and other PR streams.</p>
+      </div>
+      <div class="service">
+        <img src="https://img.icons8.com/color/96/airport.png" alt="Visitor Visa">
+        <h3>Visitor & Business Visas</h3>
+        <p>Professionally crafted visitor visa applications for business or leisure.</p>
+      </div>
+    </div>
+  </section>
 
-function WhatToExpect() {
-  return (
-    <section className="bg-[#FFFFFF] py-24 px-6">
-      <div className="max-w-4xl mx-auto text-center">
-        <h3 className="text-4xl font-semibold mb-12 text-[#154D57]">What To Expect</h3>
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-[#FEFAF7] p-6 rounded-xl shadow">
-            <h4 className="font-bold mb-2">01. Consult + Propose</h4>
-            <p>Schedule a meeting to discuss your needs and develop a personalized proposal.</p>
-          </div>
-          <div className="bg-[#FEFAF7] p-6 rounded-xl shadow">
-            <h4 className="font-bold mb-2">02. Create + Execute</h4>
-            <p>We handle documentation, form completion, and submissions.</p>
-          </div>
-          <div className="bg-[#FEFAF7] p-6 rounded-xl shadow">
-            <h4 className="font-bold mb-2">03. Analyze + Review</h4>
-            <p>Detailed updates and outcome evaluation to ensure satisfaction.</p>
-          </div>
+  <section id="testimonials" class="section">
+    <h2>Client Testimonials</h2>
+    <div class="carousel">
+      <div class="carousel-track">
+        <div class="testimonial">
+          <p>“Angad Consulting helped me get my study permit smoothly. Highly recommended!”</p>
+          <div class="testimonial-author">— Harpreet K., Toronto</div>
+        </div>
+        <div class="testimonial">
+          <p>“Professional and responsive. My PR journey was stress-free with their help.”</p>
+          <div class="testimonial-author">— Simran D., Edmonton</div>
+        </div>
+        <div class="testimonial">
+          <p>“Clear, friendly, and always available. My spousal permit was approved!”</p>
+          <div class="testimonial-author">— Jasleen M., Vancouver</div>
+        </div>
+        <div class="testimonial">
+          <p>“They explained everything clearly and submitted my PGWP just in time.”</p>
+          <div class="testimonial-author">— Rahul S., Brampton</div>
+        </div>
+        <div class="testimonial">
+          <p>“Thanks to them, I now work full-time in Canada. Great experience.”</p>
+          <div class="testimonial-author">— Neha T., Mississauga</div>
+        </div>
+        <!-- Duplicate testimonials for smooth infinite loop -->
+        <div class="testimonial">
+          <p>“Angad Consulting helped me get my study permit smoothly. Highly recommended!”</p>
+          <div class="testimonial-author">— Harpreet K., Toronto</div>
+        </div>
+        <div class="testimonial">
+          <p>“Professional and responsive. My PR journey was stress-free with their help.”</p>
+          <div class="testimonial-author">— Simran D., Edmonton</div>
+        </div>
+        <div class="testimonial">
+          <p>“Clear, friendly, and always available. My spousal permit was approved!”</p>
+          <div class="testimonial-author">— Jasleen M., Vancouver</div>
+        </div>
+        <div class="testimonial">
+          <p>“They explained everything clearly and submitted my PGWP just in time.”</p>
+          <div class="testimonial-author">— Rahul S., Brampton</div>
+        </div>
+        <div class="testimonial">
+          <p>“Thanks to them, I now work full-time in Canada. Great experience.”</p>
+          <div class="testimonial-author">— Neha T., Mississauga</div>
         </div>
       </div>
-    </section>
-  );
-}
+    </div>
+  </section>
 
-function ProvenResults() {
-  return (
-    <section className="bg-[#FEFAF7] py-24 px-6">
-      <div className="max-w-4xl mx-auto text-center">
-        <h3 className="text-4xl font-semibold mb-12 text-[#154D57]">Proven Client Results</h3>
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-xl shadow">
-            <h4 className="text-xl font-bold mb-2">95%+ Approval Rate</h4>
-            <p>Our applications are thoroughly reviewed to maximize success.</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow">
-            <h4 className="text-xl font-bold mb-2">500+ Satisfied Clients</h4>
-            <p>We’re proud to have supported hundreds of journeys to Canada.</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow">
-            <h4 className="text-xl font-bold mb-2">24-48 Hr Response Time</h4>
-            <p>Get answers quickly from a responsive, dedicated team.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+  <section id="contact" class="section contact">
+    <h2>Contact Us</h2>
+    <p><strong>Phone:</strong> <a href="tel:+16478944842">+1 (647) 894-4842</a></p>
+    <p><strong>Email:</strong> <a href="mailto:angadconsulting@gmail.com">angadconsulting@gmail.com</a></p>
+    <p><strong>Location:</strong> Brampton, Ontario, Canada</p>
+    <p><strong>Business Hours:</strong> Monday to Saturday, 10 AM – 6 PM</p>
+    <p><strong>Consultation:</strong> Available by appointment only</p>
+  </section>
 
-function Contact() {
-  return (
-    <section className="bg-[#FFFFFF] py-24 px-6">
-      <div className="max-w-xl mx-auto bg-[#FEFAF7] p-12 rounded-3xl shadow-md">
-        <h2 className="text-4xl font-semibold text-center mb-4">Get in Touch</h2>
-        <p className="text-center text-[#154D57] mb-8">Have questions? We're here to help.</p>
-        <form className="space-y-5">
-          <Input placeholder="Full Name" required className="rounded-xl" />
-          <Input placeholder="Email Address" type="email" required className="rounded-xl" />
-          <Input placeholder="Phone Number" type="tel" className="rounded-xl" />
-          <Textarea placeholder="Your Message" rows={4} required className="rounded-xl" />
-          <Button type="submit" className="w-full bg-[#154D57] hover:bg-[#B7A08B] text-white font-medium rounded-xl">
-            Send Message
-          </Button>
-        </form>
-      </div>
-    </section>
-  );
-}
+  <a href="https://wa.me/16478944842" class="whatsapp" target="_blank">💬 Chat with us on WhatsApp</a>
 
-function Footer() {
-  return (
-    <footer className="bg-[#154D57] text-[#FFFFFF] text-sm py-12 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-6">
-        <div>
-          <p className="font-semibold text-white text-lg mb-3">Angad Consulting</p>
-          <div className="flex items-center gap-2 mb-1"><Mail size={16} /> contact@angadconsulting.com</div>
-          <div className="flex items-center gap-2 mb-1"><Phone size={16} /> +1 (437) 855-9664</div>
-          <div className="flex items-center gap-2"><Globe size={16} /> www.angadconsulting.com</div>
-        </div>
-        <div className="flex flex-col md:items-end gap-2">
-          <p>Made with ❤️ in Toronto</p>
-          <p>&copy; 2025 Angad Consulting. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-export default function App() {
-  return (
-    <Router>
-      <main className="font-light text-[#000000]" style={{ fontFamily: 'Verdana' }}>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/expect" element={<WhatToExpect />} />
-          <Route path="/results" element={<ProvenResults />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-        <Footer />
-      </main>
-    </Router>
-  );
-}
+  <footer>
+    <p>&copy; 2025 Angad Consulting. All rights reserved.</p>
+    <p>Website by <a href="#">Angad Consulting</a></p>
+  </footer>
+</body>
+</html>
+ 
